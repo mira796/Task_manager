@@ -10,8 +10,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Install dependencies
         run: npm install
 
       - name: Run Tests
-        run: npm run test -- --watchAll=false
+        run: npm run test --if-present
