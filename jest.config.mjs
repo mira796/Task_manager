@@ -1,5 +1,5 @@
-// jest.config.js
-module.exports = {
+// jest.config.mjs
+export default {
   testEnvironment: 'jsdom',
   transform: {},
   moduleNameMapper: {
