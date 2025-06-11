@@ -1,16 +1,11 @@
 // tailwind.config.js
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // penting untuk mendeteksi class tailwind
+  ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-      },
-      colors: {
-        primary: "#7c3aed", // ungu
-        light: "#f3f4f6",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
