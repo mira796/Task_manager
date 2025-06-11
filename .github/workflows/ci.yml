@@ -1,4 +1,4 @@
-name: Run Tests (CI)
+name: CI - Run Vitest
 
 on:
   push:
@@ -11,16 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 🛒 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🧰 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: 📦 Install Dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm run test
+      - name: ✅ Run Vitest Unit Tests
+        run: npm run test -- --coverage
+
+      - name: 🧪 Upload coverage (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage
