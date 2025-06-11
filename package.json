@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "echo \"No tests found, skipping...\" && exit 0"
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -28,7 +28,9 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.0.0",
     "postcss": "^8.5.4",
     "tailwindcss": "^3.3.5",
     "vite": "^6.3.5"
