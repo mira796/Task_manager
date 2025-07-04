@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 name: CI - Run Vitest
+=======
+name: CI
+>>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53
 
 on:
   push:
     branches: [main]
+<<<<<<< HEAD
   pull_request:
     branches: [main]
 
@@ -30,3 +35,18 @@ jobs:
         with:
           name: coverage-report
           path: coverage
+=======
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test --if-present
+>>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53

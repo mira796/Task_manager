@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react"
 import TaskCard from "./TaskCard"
 
@@ -70,3 +71,25 @@ export default function TaskList({ tasks, updateTask, deleteTask }) {
     </>
   )
 }
+=======
+// === FILE: src/components/TaskList.jsx ===
+import TaskCard from './TaskCard';
+
+const TaskList = ({ tasks, onDelete, onUpdateStatus, onEdit }) => {
+  return (
+    <div className="p-4">
+      {tasks.map((task) => (
+        <TaskCard
+          key={task.id}
+          task={task}
+          onDelete={onDelete}
+          onUpdateStatus={onUpdateStatus}
+          onEdit={onEdit}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default TaskList;
+>>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53
