@@ -1,118 +1,75 @@
-<<<<<<< HEAD
-import React from "react"
-import Sidebar from "./components/sidebar"
-import TaskForm from "./components/TaskForm"
-import TaskList from "./components/TaskList"
-import StatBox from "./components/StatBox"
-import { dummyTasks } from "./types/task"
-import useTaskManager from "./hooks/useTaskManager"
-import "./App.css"
+// === FILE: src/App.jsx ===
+import { useState } from "react";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
 
 export default function App() {
-  const {
-    tasks,
-    editingTask,
-    addOrUpdateTask,
-    deleteTask,
-    updateTask,
-  } = useTaskManager()
-
-  return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
-      <main className="flex-1 p-8 space-y-6 bg-gray-50">
-        <h1 className="text-3xl font-extrabold text-purple-700">Task Manager</h1>
-        <StatBox tasks={tasks} />
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <TaskForm addTask={addOrUpdateTask} editingTask={editingTask} />
-        </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <TaskList tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />
-        </div>
-      </main>
-    </div>
-  )
-}
-=======
-// === FILE: src/App.jsx ===
-import { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
-import { loadTasks, saveTasks } from './data/taskStorage';
-
-function App() {
   const [tasks, setTasks] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    setTasks(loadTasks());
-  }, []);
-
-  useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]);
 
   const addTask = (task) => {
-    setTasks([...tasks, { ...task, id: uuidv4(), status: 'todo' }]);
-  };
-
-  const updateTask = (updatedTask) => {
-    setTasks(tasks.map((t) => (t.id === updatedTask.id ? { ...t, ...updatedTask } : t)));
-    setEditingTask(null);
+    const newTask = { ...task, id: Date.now(), createdAt: new Date().toISOString(), status: task.status || 'to-do' };
+    setTasks([...tasks, newTask]);
   };
 
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const updateStatus = (id, status) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, status } : t)));
+  const updateTask = (updatedTask) => {
+    setTasks(tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
+    setIsEditing(false);
+    setEditingTask(null);
   };
 
-  const handleEdit = (task) => {
+  const startEditTask = (task) => {
+    setIsEditing(true);
     setEditingTask(task);
   };
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-  );
+  const countByStatus = (status) => tasks.filter((task) => task.status === status).length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-bold p-4">XP Task Manager</h1>
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <aside className="w-64 bg-purple-700 text-white p-6 space-y-6">
+        <h1 className="text-2xl font-bold flex items-center gap-2">
+          <span>📋</span> Task Manager
+        </h1>
+        <nav className="flex flex-col space-y-2">
+          <button className="hover:bg-purple-600 p-2 rounded text-left">Dashboard</button>
+          <button className="hover:bg-purple-600 p-2 rounded text-left">Tasks</button>
+          <button className="hover:bg-purple-600 p-2 rounded text-left">Settings</button>
+        </nav>
+      </aside>
 
-      <div className="px-4 pb-2">
-        <input
-          type="text"
-          placeholder="Search by task name..."
-          value={searchQuery}
-          onChange={handleSearch}
-          className="border p-2 rounded w-full md:w-1/3"
+      {/* Content */}
+      <main className="flex-1 p-6 bg-gray-50">
+        <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Task Manager</h2>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="bg-yellow-100 p-4 rounded text-center font-semibold">{countByStatus('to-do')} <br /> To Do</div>
+          <div className="bg-blue-100 p-4 rounded text-center font-semibold">{countByStatus('in-progress')} <br /> In Progress</div>
+          <div className="bg-green-100 p-4 rounded text-center font-semibold">{countByStatus('done')} <br /> Completed</div>
+        </div>
+
+        {/* Form */}
+        <TaskForm
+          onAdd={addTask}
+          onUpdate={updateTask}
+          isEditing={isEditing}
+          editingTask={editingTask}
+          cancelEdit={() => {
+            setIsEditing(false);
+            setEditingTask(null);
+          }}
         />
-      </div>
 
-      <TaskForm
-        onAdd={addTask}
-        onUpdate={updateTask}
-        editingTask={editingTask}
-        isEditing={!!editingTask}
-        cancelEdit={() => setEditingTask(null)}
-      />
-      <TaskList
-        tasks={filteredTasks}
-        onDelete={deleteTask}
-        onUpdateStatus={updateStatus}
-        onEdit={handleEdit}
-      />
+        {/* Task List */}
+        <TaskList tasks={tasks} onDelete={deleteTask} onUpdateStatus={updateTask} onEdit={startEditTask} />
+      </main>
     </div>
   );
 }
-
-export default App;
->>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53

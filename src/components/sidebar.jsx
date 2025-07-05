@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Sidebar() {
   return (
     <div className="w-64 min-h-screen bg-purple-700 text-white p-6 shadow-lg">
@@ -8,8 +10,5 @@ export default function Sidebar() {
         <li className="hover:bg-purple-600 px-3 py-2 rounded cursor-pointer">Settings</li>
       </ul>
     </div>
-  )
+  );
 }
-
-
-

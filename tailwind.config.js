@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// tailwind.config.js
->>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -12,8 +8,4 @@ export default {
     extend: {},
   },
   plugins: [],
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53

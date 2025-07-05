@@ -1,24 +1,17 @@
-<<<<<<< HEAD
-import React, { useState } from "react"
-import TaskCard from "./TaskCard"
+// === FILE: src/components/TaskList.jsx ===
+import { useState } from 'react';
+import TaskCard from './TaskCard';
 
-/**
- * @param {{
- *  tasks: Array,
- *  updateTask: Function,
- *  deleteTask: Function
- * }} props
- */
-export default function TaskList({ tasks, updateTask, deleteTask }) {
-  const [search, setSearch] = useState("")
-  const [fStatus, setFStatus] = useState("all")
-  const [fPriority, setFPriority] = useState("all")
+const TaskList = ({ tasks, onDelete, onUpdateStatus, onEdit }) => {
+  const [search, setSearch] = useState('');
+  const [fStatus, setFStatus] = useState('all');
+  const [fPriority, setFPriority] = useState('all');
 
   const filtered = tasks.filter((t) =>
     t.title.toLowerCase().includes(search.toLowerCase()) &&
-    (fStatus === "all" || t.status === fStatus) &&
-    (fPriority === "all" || t.priority === fPriority)
-  )
+    (fStatus === 'all' || t.status === fStatus) &&
+    (fPriority === 'all' || t.priority === fPriority)
+  );
 
   return (
     <>
@@ -37,7 +30,7 @@ export default function TaskList({ tasks, updateTask, deleteTask }) {
           onChange={(e) => setFStatus(e.target.value)}
         >
           <option value="all">All Status</option>
-          <option value="to-do">To-Do</option>
+          <option value="todo">To-Do</option>
           <option value="in-progress">In Progress</option>
           <option value="done">Completed</option>
         </select>
@@ -58,38 +51,19 @@ export default function TaskList({ tasks, updateTask, deleteTask }) {
         {filtered.length === 0 ? (
           <p className="text-gray-500 italic">No tasks found.</p>
         ) : (
-          filtered.map((t) => (
+          filtered.map((task) => (
             <TaskCard
-              key={t.id}
-              task={t}
-              updateTask={updateTask}
-              deleteTask={deleteTask}
+              key={task.id}
+              task={task}
+              onDelete={onDelete}
+              onUpdateStatus={onUpdateStatus}
+              onEdit={onEdit}
             />
           ))
         )}
       </div>
     </>
-  )
-}
-=======
-// === FILE: src/components/TaskList.jsx ===
-import TaskCard from './TaskCard';
-
-const TaskList = ({ tasks, onDelete, onUpdateStatus, onEdit }) => {
-  return (
-    <div className="p-4">
-      {tasks.map((task) => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          onDelete={onDelete}
-          onUpdateStatus={onUpdateStatus}
-          onEdit={onEdit}
-        />
-      ))}
-    </div>
   );
 };
 
 export default TaskList;
->>>>>>> 2ca2546dcd354b278bcbb647febf4beccdb8cf53
